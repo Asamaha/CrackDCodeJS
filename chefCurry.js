@@ -13,6 +13,11 @@ var chefCurry = function(steph) {
   }
 }
 
+//usage
+var sum = chefCurry(function(a, b, c){ return a + b + c })
+//sum(4)(5)(4)
+//sum3(1,3,7)
+
 var curry = function() {
  var func = arguments[0];
  var argsNum = func.length;
