@@ -56,14 +56,24 @@ function isAnagram(str1, str2) {
 function isAna(str1, str2) {
   for (var i = 0; i < str1.length(); i++) {
     for (var j = 0; j < str2.length(); j++) {
-        if (str1[i] == str2[j])
-        {
+        if (str1[i] == str2[j]) {
             str2[j] = null;
             break;
         }
-
         if (j == str2.length() - 1)
             return false;
     }
+  }
 }
+
+function replaceFun(str) {
+  var newWord = ""
+  for (var i = 0; i < str.length; i++) {
+    if(str.charAt(i) === " ") {
+      newWord += "%20";
+    } else {
+      newWord += str.charAt(i)
+    }
+  }
+  return newWord;
 }
