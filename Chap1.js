@@ -189,3 +189,38 @@ function palindromPerm(str) {
   return count < 2
 }
 
+// check if a string is has one or zero edits away
+function isOneZeroEdit(str1, str2) {
+  if(Math.abs(str1.length - str2.length) > 1) {
+    return false;
+  }
+  var edited = false;
+  for(var i = 0, j = 0; i < str1.length && j < str2.length; ++i, ++j) {
+    if(str1[i] !== str2[j]) {
+      if(edited) {
+        return false;
+      }
+      if(str1.length > str2.length) {
+        --j; //delete from str1
+      } else if (str1.length < str2.length) {
+        --i; //delete from str2
+      }
+      edited = true;
+    }
+  }
+  return true
+}
+
+// compress strings
+function compressString(str) {
+  var compress = "";
+  var count = 0
+  for (var i = 0; i < str.length; i++) {
+    count++;
+    if(i + 1 >= str.length || str.charAt(i) != str.charAt(i + 1)){
+      compress += str.charAt(i);
+      compress += count;
+    }
+  }
+  return compress.length < str.length ? compress.toString() : str;
+}
