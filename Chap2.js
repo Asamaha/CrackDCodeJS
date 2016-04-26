@@ -133,4 +133,114 @@ function sumListsReverseOrder(list1, list2) {
   return head.next;
 }
 
+// implement a function to check if a linked list is a palindrome
+function isPalindromeReverse(list) {
+  var length = getLength(list);
+
+  if (length <= 1) {
+    return true;
+  }
+
+  var node = list,
+    half = Math.floor(length / 2),
+    mid;
+  for (var i = half; i > 0; --i) {
+    mid = node;
+    node = node.next;
+  }
+
+  if ((length % 2) === 1) {
+    mid = node;
+    node = node.next;
+  }
+
+  var tail = reverse(node, mid),
+    isPalindrome = true,
+    prev = null,
+    next;
+  // now walk from start to middle and end to middle comparing values
+  node = list;
+  for (var i = half; i > 0; --i) {
+    isPalindrome = isPalindrome && node.val === tail.val;
+    next = tail.next;
+    tail.next = prev;
+    prev = tail;
+    tail = next;
+    node = node.next;
+  }
+
+  return isPalindrome;
+}
+
+function reverse(node, end) {
+  var prev = end,
+    next;
+  while (node) {
+    next = node.next;
+    node.next = prev;
+    prev = node;
+    node = next;
+  }
+  return prev;
+}
+
+
+//Given two linked list, determine if the two lists intersect
+function doIntersect(list1, list2) {
+  let len1 = getLength(list1),
+    len2 = getLength(list2);
+
+  list1 = skip(list1, len1 - len2);
+  list2 = skip(list2, len2 - len1);
+
+  let node1 = list1,
+    node2 = list2;
+  while (node1 && node2) {
+    if (node1 === node2) {
+      return node1;
+    }
+    node1 = node1.next;
+    node2 = node2.next;
+  }
+
+  return undefined;
+}
+
+function skip(list, num) {
+  while (num > 0) {
+    list = list.next;
+    --num;
+  }
+  return list;
+}
+
+// Given a circular linked list, implement an algorithm which returns node at the begin- ning of the loop.
+function findStartOfLoop(list) {
+  if (!list) {
+    return null;
+  }
+
+  let slow = list,
+    fast = list;
+
+  while (slow.next && fast.next && fast.next.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (fast === slow) {
+      break;
+    }
+  }
+
+  if (!slow || slow !== fast) { // no loop
+    return null;
+  }
+
+  slow = list;
+  while (slow !== fast) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+
+  return fast;
+}
 
