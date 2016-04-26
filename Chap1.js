@@ -60,13 +60,13 @@ function isAnagram(str1, str2) {
 }
 
 function isAna(str1, str2) {
-  for (var i = 0; i < str1.length(); i++) {
-    for (var j = 0; j < str2.length(); j++) {
+  for (var i = 0; i < str1.length; i++) {
+    for (var j = 0; j < str2.length; j++) {
         if (str1[i] == str2[j]) {
             str2[j] = null;
             break;
         }
-        if (j == str2.length() - 1)
+        if (j == str2.length - 1)
             return false;
     }
   }
@@ -138,11 +138,7 @@ function isSubstring(str, target) {
   if(str === null || target === null) {
     return false
   }
-  if(str.indexOf(target) >= 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return str.includes(target);
 }
 
 function isRotate(str, target) {
