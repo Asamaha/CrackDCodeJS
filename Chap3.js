@@ -1,5 +1,5 @@
 // Describe how you could use a single array to implement three stacks.
-
+//Time and space is constant O(1)
 var TripleStack = function() {
   this.array = [];
   this.lengths = [0,0,0];
@@ -44,3 +44,51 @@ TripleStack.prototype.isEmpty = function(stack) {
   // body...
   return this.getLength(stack) === 0;
 };
+
+// How would you design a stack which, in addition to push and pop, also has a function min which returns the minimum element? Push, pop and min should all operate in O(1) time.
+
+var MinStack = function() {
+  this.stack = [];
+}
+
+MinStack.prototype.push = function(value) {
+  // body...
+  var min = this.min();
+  this.stack.push({
+    value: value,
+    min: Math.min(min !== undefined ? min : Number.POSITIVE_INFINITY, value)
+  });
+};
+
+MinStack.prototype.pop = function() {
+  // body...
+  if(!this.isEmpty()) {
+    var item = this.stack.pop();
+    return item.value;
+  }
+};
+
+MinStack.prototype.peek = function() {
+  // body...
+  if(!this.isEmpty()) {
+    var item = this.stack.[this._stack.length - 1];
+    return item.value;
+  }
+};
+
+MinStack.prototype.min = function() {
+  // body...
+  if(!this.isEmpty()) {
+    var item = this.stack.[this._stack.length - 1];
+    return item.min;
+  }
+};
+
+MinStack.prototype.isEmpty = function() {
+  // body...
+  return this.stack.length === 0;
+};
+
+
+
+
