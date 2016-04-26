@@ -132,4 +132,21 @@ function setZeros(matrix) {
 }
 
 // Assume you have a method isSubstring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring (i.e., “waterbottle” is a rotation of “erbottlewat”).
+function isSubstring(str, target) {
+  if(str === null || target === null) {
+    return false
+  }
+  if(str.indexOf(target) >= 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
+function isRotate(str, target) {
+  if(str.length === target.length && str.length > 0) {
+    var merge = str + str;
+    return isSubstring(merge, target)
+  }
+  return false;
+}
