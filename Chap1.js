@@ -112,23 +112,25 @@ function rotateMatrix(arr,arrLen) {
 
 // Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column is set to 0.
 function setZeros(matrix) {
-  for (var i = 0; i < matrix.length; i++) {
-    var row = matrix[i]
-    for(var j = 0; j < matrix[i].length; j++) {
-      var column = matrix[i][j]
+  var rows = new Array(matrix.length);
+  var column = new Array(matrix[0].length);
+
+  for (var i = 0; i < rows.length; ++i) {
+    for(var j = 0; j < column.length; ++j) {
       if(matrix[i][j] === 0) {
-        row[i] = 1;
-        column[j] = 1;
+        rows[i] = true;
+        column[j] = true;
       }
     }
   }
-  for (var i = 0; i < matrix.length; i++) {
-    for (var j = 0; j < matrix[i].length; j++) {
-      if(row[i] === 1 || column[j] === 1) {
+  for (var i = 0; i < rows.length; ++i) {
+    for (var j = 0; j < column.length; ++j) {
+      if(rows[i] || column[j]) {
         matrix[i][j] = 0
       }
     }
   }
+  return matrix;
 }
 
 // Assume you have a method isSubstring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring (i.e., “waterbottle” is a rotation of “erbottlewat”).
