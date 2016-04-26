@@ -148,3 +148,44 @@ function isRotate(str, target) {
   }
   return false;
 }
+
+// check if the two string is permutation of the other
+function isPermutatinSorted(str1, str2) {
+  if(str1 === 0 || str1.length !== str2.length) {
+    return false
+  }
+  str1.sort();
+  str2.sort();
+  return str1.every(function(val, index){
+    return val === str2[index]
+  })
+}
+
+//write a function to check if it is a permutation of a parlindrome
+//using sets
+function isPalindromePerm(str) {
+  var characters = new Set();
+  for(var char of str) {
+    if(char !== " ") {
+      if(characters.has(char)) {
+        characters.delete(char);
+      } else {
+        characters.add(char);
+      }
+    }
+  }
+  return characters.size <= 1;
+}
+function palindromPerm(str) {
+  var letterCount = {}
+  var count = 0;
+  for(var i = 0; i < str.length; i++) {
+    letterCount[str[i]] = letterCount[str[i]] || 0;
+    letterCount[str[i]]++;
+  }
+  for (var key in letterCount) {
+    count += letterCount[key] % 2
+  }
+  return count < 2
+}
+
