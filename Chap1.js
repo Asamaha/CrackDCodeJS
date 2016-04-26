@@ -1,3 +1,5 @@
+// Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?
+
 function isUnique(str) {
   if(str.length > 256){
       return false
@@ -13,6 +15,8 @@ function isUnique(str) {
   return true
 }
 
+// Write code to reverse a C-Style String. (C-String means that “abcd” is represented as  ve characters, including the null character.)
+
 function reverse(str) {
   var result = ""
   for(var i = 0; i < str.length; i++) {
@@ -21,6 +25,7 @@ function reverse(str) {
   return result
 }
 
+// Design an algorithm and write code to remove the duplicate characters in a string without using any additional bu er.
 function remDup(arr) {
   var hash = {}
   var result = [];
@@ -33,6 +38,7 @@ function remDup(arr) {
   return result
 }
 
+// Write a method to decide if two strings are anagrams or not.
 function isAnagram(str1, str2) {
   var result = {}
   if(str1 === null || str2 === null) {
@@ -66,6 +72,7 @@ function isAna(str1, str2) {
   }
 }
 
+// Write a method to replace all spaces in a string with ‘%20’.
 function replaceFun(str) {
   var newWord = ""
   for (var i = 0; i < str.length; i++) {
@@ -77,3 +84,52 @@ function replaceFun(str) {
   }
   return newWord;
 }
+
+// Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
+
+function rotateMatrix(matrix) {
+  var result = [];
+  for (var i = 0; i < matrix.length; i++) {
+    result.push([]);
+  }
+  for (var i = 0; i < matrix.length; i++) {
+    for (var j = 0; j < matrix.length; i++) {
+      result[j][matrix.length-1-i] = matrix[i][j]
+    }
+  }
+  return result;
+}
+// in place
+function rotateMatrix(arr,arrLen) {
+  for (var i = 0; i < arrLen; i++) {
+    for (var j = 0; j <i; j++) {
+      var temp = arr[i][j];
+      arr[i][j] = arr[j][i];
+      arr[j][i] = temp;
+    }
+  }
+}
+
+// Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column is set to 0.
+function setZeros(matrix) {
+  for (var i = 0; i < matrix.length; i++) {
+    var row = matrix[i]
+    for(var j = 0; j < matrix[i].length; j++) {
+      var column = matrix[i][j]
+      if(matrix[i][j] === 0) {
+        row[i] = 1;
+        column[j] = 1;
+      }
+    }
+  }
+  for (var i = 0; i < matrix.length; i++) {
+    for (var j = 0; j < matrix[i].length; j++) {
+      if(row[i] === 1 || column[j] === 1) {
+        matrix[i][j] = 0
+      }
+    }
+  }
+}
+
+// Assume you have a method isSubstring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring (i.e., “waterbottle” is a rotation of “erbottlewat”).
+
