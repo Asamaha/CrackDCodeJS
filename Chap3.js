@@ -206,7 +206,6 @@ function sortStack(stack) {
   while (!isEmpty(temp)) {
     stack.push(temp.pop());
   }
-
   return stack;
 }
 
@@ -217,6 +216,56 @@ function peek(stack) {
 function isEmpty(stack) {
   return stack.length === 0;
 }
+
+//Animal Shelter
+var AnimalShelter = function() {
+  this.dogs = [];
+  this. cats = [];
+  this.id = 0;
+}
+
+AnimalShelter.prototype.enqueueCat = function(name) {
+  // body...
+  this.cats.push({
+    name: name,
+    id: this.id++
+  });
+};
+
+AnimalShelter.prototype.enqueueDog = function(name) {
+  // body...
+  this.dogs.push({
+    name: name,
+    id: this.id++
+  })
+};
+
+AnimalShelter.prototype.dequeueAny = function() {
+  // body...
+  var dogId = this._dogs.length > 0 ? this._dogs[0].id : Number.POSITIVE_INFINITY,
+    catId = this._cats.length > 0 ? this._cats[0].id : Number.POSITIVE_INFINITY;
+
+  if (dogId !== Number.POSITIVE_INFINITY || catId !== Number.POSITIVE_INFINITY) {
+    if (dogId < catId) {
+      return this.dequeueDog()
+    }
+    else {
+      return this.dequeueCat()
+    }
+  }
+};
+
+AnimalShelter.prototype.dequeueCat = function() {
+  // body...
+  return this.cats.shift().name;
+};
+
+AnimalShelter.prototype.dequeueDog = function() {
+  // body...
+  return this.dogs.shift().name;
+};
+
+
 
 
 
