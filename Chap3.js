@@ -89,6 +89,94 @@ MinStack.prototype.isEmpty = function() {
   return this.stack.length === 0;
 };
 
+// Imagine a (literal) stack of plates. If the stack gets too high, it might topple.
+// There- fore, in real life, we would likely start a new stack when the previous stack 
+// exceeds some threshold. Implement a data structure SetOfStacks that mimics this. 
+// SetOf- Stacks should be composed of several stacks, and should create a new stack once 
+// the previous one exceeds capacity. SetOfStacks.push() and SetOfStacks.pop() should behave 
+// identically to a single stack (that is, pop() should return the same values as it would if there were just a single stack).
+
+var StackOfStacks = function(maxsize) {
+  this.stacks = [[]]
+  this.max = maxsize;
+}
+
+StackOfStacks.prototype.push = function(value) {
+  // body...
+  if (this.stacks[this.stacks.length - 1].length >= this.max) {
+    this.stacks.push([]);
+  }
+  this.stacks[this.stacks.length - 1].push(value);
+};
+
+StackOfStacks.prototype.pop = function(value) {
+  // body...
+  var value = this.stacks[this.stacks.length - 1].pop();
+  if (this.stacks.length > 1 && this.stacks[this.stacks.length - 1].length === 0) {
+    this.stacks.pop();
+  }
+  return value;
+};
+
+StackOfStacks.prototype.popAt = function(number) {
+  // body...
+  if (number < 1 || number > this.stacks.length) {
+    throw new Error('stack number is invalid');
+  }
+  if (number === this.stacks.length) {
+    return this.pop();
+  }
+  var stack = this.stacks[number - 1],
+    value = stack.pop(),
+    tempStack = [],
+    nextStack;
+  if (number < this.stacks.length) {
+    for (var i = number; i < this.stacks.length; ++i) {
+      nextStack = this.stacks[i];
+      while (nextStack.length > 0) {
+        tempStack.push(nextStack.pop());
+      }
+      stack.push(tempStack.pop());
+      while (tempStack.length > 0) {
+        nextStack.push(tempStack.pop());
+      }
+      stack = nextStack;
+    }
+  }
+  if (this.stacks.length > 1 && this.stacks[this.stacks.length - 1].length === 0) {
+    this.stacks.pop();
+  }
+  return value;
+};
+
+// Implement a MyQueue class which implements a queue using two stacks.
+var MyQueue = function() {
+  this.inbox = [];
+  this.outbox = [];
+}
+MyQueue.prototype.enqueue = function(val) {
+  // body...
+  this.inbox.push(val)
+};
+
+MyQueue.prototype.dequeue = function() {
+  // body...
+  if (this.outbox.length === 0 && this.inbox.length === 0) {
+    throw new Error('queue is empty');
+  }
+  if (this.outbox === 0) {
+    while(this.inbox > 0) {
+      this.outbox.push(this.inbox.pop());
+    }
+  }
+  return this.outbox.pop();
+};
+
+
+
+
+
+
 
 
 
