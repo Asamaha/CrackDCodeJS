@@ -301,7 +301,7 @@ function sameTree(node1, node2) {
   }
 }
 
-//Path with sum
+//Path with sum tr
 function findPathWithSum(tree, value) {
   if (!tree || !tree.root) {
     throw new Error('tree must be valid and non-empty');
