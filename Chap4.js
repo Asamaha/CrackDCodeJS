@@ -126,8 +126,7 @@ function findSuccessor(node) {
       snode = snode.left;
     }
     return snode.val;
-  }
-  else {
+  } else {
     // go up until we find left path
     snode = node;
     while (snode.parent && snode !== snode.parent.left) {
@@ -135,6 +134,40 @@ function findSuccessor(node) {
     }
     return snode.parent ? snode.parent.val : undefined;
   }
+}
+
+//Build Order: find a build order that will allow the projects to be built....
+function buildOrder(projects, dependencies) {
+  let adj = {},
+    finished = [],
+    discovered = new Set(),
+    path = new Set();
+
+  // create adjacency matrix... => is a function in es6
+  projects.forEach(project => adj[project] = []);
+  dependencies.forEach(edge => adj[edge[1]].push(edge[0]));
+  // run topological sort
+  projects.forEach(project => topologicalSort(adj, discovered, finished, path, project));
+
+  return finished.reverse();
+}
+
+function topologicalSort(adj, discovered, finished, path, project) {
+  if (discovered.has(project)) {
+    return;
+  }
+
+  discovered.add(project);
+  path.add(project);
+  for (let neighbour of adj[project]) {
+    if (path.has(neighbour)) {
+      throw new Error('dependencies are cyclic');
+    }
+
+    topologicalSort(adj, discovered, finished, path, neighbour);
+  }
+  path.delete(project);
+  finished.push(project);
 }
 
 
