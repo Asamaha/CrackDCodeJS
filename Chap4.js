@@ -170,6 +170,137 @@ function topologicalSort(adj, discovered, finished, path, project) {
   finished.push(project);
 }
 
+//Firt Common Ancestors: 
+function findFirstCommonAnscestor(node1, node2) {
+  if (!node1 || !node2) {
+    throw new Error('node1 and node2 must both be valid nodes');
+  }
+
+  var h1 = height(node1),
+    h2 = height(node2);
+  node1 = moveUp(node1, h1 - h2);
+  node2 = moveUp(node2, h2 - h1);
+  while (node1 !== node2) {
+    node1 = node1.parent;
+    node2 = node2.parent;
+  }
+
+  return node1.val;
+}
+
+function height(node) {
+  var count = 0;
+  while (node) {
+    node = node.parent;
+    ++count;
+  }
+  return count;
+}
+
+function moveUp(node, count) {
+  for (var i = count; i > 0; --i) {
+    node = node.parent;
+  }
+  return node;
+}
+
+//BST Sequences
+function sequencesToCreateBST(tree) {
+  if (!tree || !tree.root) {
+    return null;
+  }
+  return sequencesRecursive(tree.root);
+}
+
+function sequencesRecursive(node) {
+  if (!node) {
+    return null;
+  }
+  else {
+    let perms = permutations(sequencesRecursive(node.left), sequencesRecursive(node.right));
+    if (!perms) {
+      perms = [[node.val]];
+    }
+    else {
+      perms.forEach(p => p.unshift(node.val));
+    }
+    return perms;
+  }
+}
+
+function permutations(left, right) {
+  if (!left || !right) {
+    return left || right;
+  }
+  else {
+    var perms = [];
+    for (var i = 0; i < left.length; ++i) {
+      for (var j = 0; j < right.length; ++j) {
+        perms.push.apply(perms, permutationsRecursive([], left[i], right[j], [], 0, 0));
+      }
+    }
+    return perms;
+  }
+}
+
+function permutationsRecursive(perms, list1, list2, prefix, i, j) {
+  if (i === list1.length && j === list2.length) {
+    perms.push(prefix.slice(0));
+  }
+  else {
+    if (i < list1.length) {
+      prefix.push(list1[i]);
+      permutationsRecursive(perms, list1, list2, prefix, i + 1, j);
+      prefix.pop();
+    }
+
+    if (j < list2.length) {
+      prefix.push(list2[j]);
+      permutationsRecursive(perms, list1, list2, prefix, i, j + 1);
+      prefix.pop();
+    }
+  }
+  return perms;
+}
+
+//Check Subtree
+function isSubtree(tree1, tree2) {
+  if (!tree1 || !tree1.root) {
+    throw new Error('trees1 must be valid non-empty trees');
+  }
+  if (!tree2 || !tree2.root) {
+    return true;
+  }
+  return findRoot(tree1.root, tree2.root);
+}
+
+function findRoot(node1, node2) {
+  if (!node1 || !node2) {
+    return false;
+  }
+  else if (node1.val === node2.val && sameTree(node1, node2)) {
+    return true;
+  }
+  else {
+    return findRoot(node1.left, node2) || findRoot(node1.right, node2);
+  }
+}
+
+function sameTree(node1, node2) {
+  if (!node1 && !node2) {
+    return true;
+  }
+  else if (!node1 && node2 || node1 && !node2) {
+    return false;
+  }
+  else if (node1.val === node2.val) {
+    return sameTree(node1.left, node2.left) && sameTree(node1.right, node2.right);
+  }
+  else {
+    return false;
+  }
+}
+
 
 
 
